@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Execute Command</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      margin: 20px;
+    }
+    #response {
+      margin-top: 20px;
+      white-space: pre-wrap;
+    }
+  </style>
+</head>
+<body>
+  <h1>Execute Python Script Example</h1>
+  <button id="executeCommand">Execute bojtest.py</button>
+  <div id="response"></div>
+
+  <script>
+    document.getElementById('executeCommand').addEventListener('click', () => {
+      fetch('/execute')
+        .then(response => response.json())
+        .then(data => {
+          const responseDiv = document.getElementById('response');
+          if (data.error) {
+            responseDiv.textContent = `Error: ${data.error}`;
+          } else {
+            responseDiv.textContent = `Output: ${data.output}`;
+          }
+        })
+        .catch(error => {
+          document.getElementById('response').textContent = `Fetch error: ${error}`;
+        });
+    });
+  </script>
+</body>
+</html>
